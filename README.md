@@ -10,4 +10,4 @@ A simple Ethereum application that simulates a lottery consisting of:
 3. Compile and deploy the smart contract: `node deploy.js`
 4. Run the React application `npm start`
 
-This code is from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider
+This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider, with some modifications.
