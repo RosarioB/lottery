@@ -7,7 +7,8 @@ A simple Ethereum application that simulates a lottery consisting of:
 
 1. Add a .env file in the root of the project smart_contract with `PRIVATE_KEY` and `INFURA_URL`
 2. Run `npm install` on both the folders `smart contract` and `react`
-3. Compile and deploy the smart contract: `node deploy.js`
-4. Run the React application `npm start`
+3. To run the tests on the smart contract `cd smart_contract` and then `npm run test` 
+4. Compile and deploy the smart contract: `node deploy.js`
+5. Run the React application `npm start`
 
 This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider, with some modifications.
