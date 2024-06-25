@@ -26,35 +26,35 @@ Follow these steps to set up and run the application:
 1. **Environmental Setup**:
     - Create a `.env` file in the root of the `smart_contract` folder. 
     - Add your `PRIVATE_KEY` and `INFURA_URL` to the `.env` file
-    ```
-    PRIVATE_KEY=your_private_key
-    INFURA_URL=https://infura.io/v3/your_infura_project_id
-    ```
+        ```
+        PRIVATE_KEY=your_private_key
+        INFURA_URL=https://infura.io/v3/your_infura_project_id
+        ```
 2. **Install Dependencies**:
     - Navigate to both the `smart_contract` and `react` folders and run `npm install` to install the necessary packages.
-    ```
-    cd smart_contract
-    npm install
-    cd ../react
-    npm install
-     ```
+        ```
+        cd smart_contract
+        npm install
+        cd ../react
+        npm install
+        ```
 3. **Run Smart Contract Tests**:
     - To test the smart contract, navigate to the `smart_contract` folder and run:
-    ```
-    cd smart_contract
-    npm run test
-    ```
+        ```
+        cd smart_contract
+        npm run test
+        ```
 4. **Compile and Deploy the Smart Contract**:
     - Compile and deploy the smart contract by running:
-    ```
-    node deploy.js
-    ```
+        ```
+        node deploy.js
+        ```
 5. **Start the React Application**:
     - Navigate to the `react` folder and start the React application:
-    ```
-    cd react
-    npm start
-    ```
+        ```
+        cd react
+        npm start
+        ```
 
 ## Acknowledgments
 This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider, with some modifications.
