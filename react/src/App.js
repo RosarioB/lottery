@@ -1,33 +1,35 @@
-import logo from "./logo.svg";
-import "./App.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import web3 from "./web3";
 import lottery from "./lottery";
 
 const { ethereum } = window;
 
-class App extends React.Component {
+function App() {
+  const [manager, setManager] = useState("");
+  const [players, setPlayers] = useState([]);
+  const [balance, setBalance] = useState("");
+  const [value, setValue] = useState("");
+  const [message, setMessage] = useState("");
+  const [accounts, setAccounts] = useState([]);
+  const [lastWinner, setLastWinner] = useState("");
 
-  state = {
-      manager: '',
-      players: [],
-      balance: '',
-      value: '',
-      message: '',
-      accounts: [],
-      lastWinner: ''
-  };
-  
-  async componentDidMount() {
-    const manager = await lottery.methods.manager().call();
-    const players = await lottery.methods.getPlayers().call();
-    const balance = await web3.eth.getBalance(lottery.options.address);
-    this.setState({ manager, players, balance });
-    this.getMetamaskAccounts();
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const manager = await lottery.methods.manager().call();
+      const players = await lottery.methods.getPlayers().call();
+      const balance = await web3.eth.getBalance(lottery.options.address);
+      
+      setManager(manager);
+      setPlayers(players);
+      setBalance(balance);
+      getMetamaskAccounts();  // Call the function directly without 'this'
+    }
 
-  getMetamaskAccounts = async () => {
-    let accounts= [];
+    fetchData();
+  }, []);
+
+  const getMetamaskAccounts = async () => {
+    let accounts = [];
     try {
       // Request account access
       accounts = await ethereum.request({ method: 'eth_requestAccounts' });
@@ -40,79 +42,77 @@ class App extends React.Component {
         console.error(error);
       }
     }
-    this.setState({ accounts })
+    setAccounts(accounts);
   }
 
-  onSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const accounts = this.state.accounts;
-
     if (accounts.length > 0 && accounts[0]) {
-      this.setState({ message: 'Waiting on transaction success...' });
+      setMessage("Waiting on transaction success...");
 
       try {  
         await lottery.methods.enter().send({
           from: accounts[0],
-          value: web3.utils.toWei(this.state.value, 'ether')
+          value: web3.utils.toWei(value, "ether")
         });
-        this.setState({ message: 'You have been entered!' });
-      }
-      catch (error) {
-        this.setState({ message: error.message });
+        setMessage("You have been entered!");
+      } catch (error) {
+        setMessage(error.message);
       }
     }
   }
 
-  onClick = async () => {
-    const accounts = this.state.accounts;
+  const handleClick = async () => {
+    if (accounts.length > 0 && accounts[0]) {
+      setMessage("Waiting on transaction success...");
 
-    this.setState({ message: 'Waiting on transaction success...' });
+      try {
+        await lottery.methods.pickWinner().send({
+          from: accounts[0]
+        });
 
-    await lottery.methods.pickWinner().send({
-      from: accounts[0]
-    });
-
-    const lastWinner = await lottery.methods.lastWinner().call();
-    this.setState({ lastWinner });
-    this.setState({ message: 'A winner has been picked!' });
+        const lastWinner = await lottery.methods.lastWinner().call();
+        setLastWinner(lastWinner);
+        setMessage("A winner has been picked!");
+      } catch (error) {
+        setMessage(error.message);
+      }
+    }
   }
 
-  render() {  
-     return (
-      <div>
-        <h2>Lottery Contract</h2>
-        <p>
-          This contract is managed by: {this.state.manager}.
-          There are currently {this.state.players.length} people entered, competing to win {web3.utils.fromWei(this.state.balance, 'ether')} ether!
-        </p>
+  return (
+    <div>
+      <h2>Lottery Contract</h2>
+      <p>
+        This contract is managed by {manager}. There are currently{" "}
+        {players.length} people entered, competing to win{" "}
+        {web3.utils.fromWei(balance, "ether")} ether!
+      </p>
 
-        <hr />
+      <hr />
+      <form onSubmit={handleSubmit}>
+        <h4>Want to try your luck?</h4>
+        <div>
+          <label>Amount of ether to enter</label>
+          <input 
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+          />
+        </div>
+        <button>Enter</button>
+      </form>
 
-        <form onSubmit={this.onSubmit}>
-          <h4>Want to try your luck?</h4>
-          <div>
-            <label>Amount of ether to enter</label>
-            <input 
-              value={this.state.value}
-              onChange={event => this.setState({ value: event.target.value })}
-            />
-          </div>
-          <button>Enter</button>
-        </form>
-
-        <hr />
-          <h4>Ready to pick a winner?</h4>
-          <button onClick={this.onClick}>Pick a winner!</button>
-        <hr />
-        {
-          this.state.lastWinner && (
-            <p>The winner of the lottery is: {this.state.lastWinner}.</p>
-          )  
-        }
-        <h1>{this.state.message}</h1>
-      </div>
-    );
-  }
+      <hr />
+      <h4>Ready to pick a winner?</h4>
+      <button onClick={handleClick}>Pick a winner!</button>
+      <hr />
+      {lastWinner && (
+        <p>The winner of the lottery is: {lastWinner}.</p>
+      )}
+      <h1>{message}</h1>
+    </div>
+  );
 }
+
 export default App;
