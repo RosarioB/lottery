@@ -1,8 +1,11 @@
 # lottery
+
 ## Overview
+
 This Ethereum application simulates a lottery system using a smart contract on the Ethereum blockchain, complemented by a React-based front-end. The project demonstrates how to deploy a smart contract, interact with it via a web interface, and manage Ether transactions.
 
 ## Structure
+
 The project is organized into two main components:
 
 - **Smart Contract**: The backend logic of the lottery, located in the `smart_contract` folder.
@@ -12,6 +15,7 @@ The project is organized into two main components:
 ![alt text](https://github.com/RosarioB/lottery/blob/main/github_images/lottery.png?raw=true)
 
 ## How it works
+
 1. **Manager Information**: The top of the application displays the manager's address, who is the account that deployed the contract.
 
 2. **Lottery Details**: It shows the number of players entered and the total Ether in the pot.
@@ -21,6 +25,7 @@ The project is organized into two main components:
 4. **Pick a Winner**: Only the manager can click the 'Pick a Winner' button to randomly select a winner from the participants and transfer the Ether to the winner's address.
 
 ## Setting up the application
+
 Follow these steps to set up and run the application:
 
 1. **Environmental Setup**:
@@ -57,4 +62,5 @@ Follow these steps to set up and run the application:
         ```
 
 ## Acknowledgments
-This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider, with some modifications.
+
+This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide) by Stephen Grider, with some modifications.
